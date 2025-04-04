@@ -56,14 +56,22 @@ Fixtures/: Contains text to be asserted and test data to be used across the test
 
 ## Documentation
 
-assertDialogOrSuccess signature:
+### `assertDialogOrSuccess` Usage
+
+```ts
+// page: Playwright Page object
+// expectedOutcome: "success" | "dialog" | "validation"
+// expectedValidationMessage: Message expected in dialog or validation (ignored for "success")
+// inputSelector: Required only for "validation" (e.g., "#email")
 
 await assertDialogOrSuccess(
-  page,                      // Playwright page object
-  expectedOutcome,           // "success" | "dialog" | "validation"
-  expectedValidationMessage, // Message expected in dialog or validation (optional for "success")
-  inputSelector              // Required ONLY for "validation" (e.g., "#email")
+  page,
+  "validation",
+  "Please enter a valid email address",
+  "#email"
 );
+```
+
 
 1. Success Message: await assertDialogOrSuccess(page, "success");
 2. Dialog Message: await assertDialogOrSuccess(page, "dialog", "Please fill out all required fields");
