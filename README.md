@@ -43,10 +43,6 @@ In the current - headless mode, a report can be found in the git actions;
 
 If you're looking for a downloadable report, follow the steps above to configure reporter and you will find your report in playwright-report/ as it is already configured;
 
-Important note for failed TCs:
-
-You will find a brief explanation in the first 3 lines of the output, the rest is info available for debugging.
-
 ### Project Structure:
 
 The project structure follows the Page Object Model (POM) design pattern for organizing test automation code:
@@ -57,6 +53,32 @@ tsconfig.json: Configuration file for specifying test environment settings.
 package.json: Node.js package configuration file with dependencies and scripts.
 utils/: Contains utility functions used across the test scripts - fillUserProfile.ts containing default state of correct data; assertDialogOrSuccess.ts - an assessment function that encompasses all 3 possible outcomes of data submission within this form.
 Fixtures/: Contains text to be asserted and test data to be used across the test scripts.
+
+## Documentation
+
+assertDialogOrSuccess signature:
+
+await assertDialogOrSuccess(
+  page,                      // Playwright page object
+  expectedOutcome,           // "success" | "dialog" | "validation"
+  expectedValidationMessage, // Message expected in dialog or validation (optional for "success")
+  inputSelector              // Required ONLY for "validation" (e.g., "#email")
+);
+
+1. Success Message: await assertDialogOrSuccess(page, "success");
+2. Dialog Message: await assertDialogOrSuccess(page, "dialog", "Please fill out all required fields");
+3. Validation Message (HTML5 inline validation) await assertDialogOrSuccess(page, "validation", "Please enter a valid email address", "#email");
+
+Important note for failed TCs:
+
+You will find a brief explanation in the first 3 lines of the output, the rest is info available for debugging.
+
+For example: TC08 fails:
+  1) tests/08TC.spec.ts:3:5 › Verify last name is mandatory ────────────────────────────────────────
+
+    Error: ❌ Expected dialog message to contain: "Last name must be filled out" but got: "First name must be filled out". Test FAILS!
+	
+	Here it can be seen that we're expecting a dialog message, but getting another, therefore the test fails.
 
 ### Make sure the system allows running scripts (for Win):
 Windows: run the following code in Windows PowerShell (admin): Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -77,6 +99,8 @@ After a brief wait, the flag is retrieved in Node context and if success is dete
 
 A very interesting side-efect of this quick trigger of the success message, was that in the initial TCs targeting this scenario, the wait implemented after clicking Submit, made it impossible for the assessment function to properly catch the success element.
 Removing the wait from all tests on this action fixed the problem.
+
+The last - relatively small challenge was that the validation message is an HTML5 inline validation, therefore a bit harder to catch, as the CSS selector must be declared when calling the assertion function as described in the Documentation.
 
 ### Note:
 
