@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./*"]
+      },
+      "target": "ES6",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "types": ["@playwright/test", "node"],
+      "strict": true
+    },
+    "include": ["tests/**/*.ts", "pages/**/*.ts", "tests/fixtures.ts", "utils/fillUserProfile.ts"],
+    "exclude": ["node_modules"]
+  }
+  
