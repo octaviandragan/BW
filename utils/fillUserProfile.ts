@@ -1,5 +1,7 @@
 import { UserProfilePage } from '../pages/UserProfile.page';
 
+//Fills the user profile form using default or overridden values.
+
 export async function fillUserProfile(
     userProfile: UserProfilePage,
     overrides: Partial<{ 
@@ -10,7 +12,8 @@ export async function fillUserProfile(
     }> = {},
     includeOptionalFields = true
 ) {
-    // Default valid values
+    // Define a complete set of default values for all form fields (both required and optional).
+    // These represent a valid user profile submission.
     const defaultData : {
         firstName: string; lastName: string; email: string;
         password: string; confirmPassword: string; gender?: 'male' | 'female' | 'preferNotToSay';
@@ -30,10 +33,13 @@ export async function fillUserProfile(
         gitHub: "https://github.com/johndoe"
     };
 
-    // Apply overrides for specific tests
+    // Merge the default values with any test-specific overrides.
+    // This allows tests to focus only on the fields they want to vary.
     const formData = { ...defaultData, ...overrides };
 
-    // Fill required fields
+    // Call the POM method to fill the form fields.
+    // Required fields are always filled.
+    // Optional fields are conditionally included based on the `includeOptionalFields` flag.
     await userProfile.fillUserProfile({
         firstName: formData.firstName,
         lastName: formData.lastName,

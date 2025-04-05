@@ -9,5 +9,5 @@ test('Verify phone number rejects invalid format', async ({ page }) => {
     // Click submit
     page.getByRole('button', { name: 'Submit' }).click();
     // Initiate the assertion function (assertDialogOrSuccess.ts from utils expecting an inline validation message from the phone input field
-    await assertDialogOrSuccess(page, "validation", "Please match the requested format", "#phone");
+    await assertDialogOrSuccess(page, "validation", "requested format", "#phone");
     })

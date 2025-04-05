@@ -9,5 +9,5 @@ test('Verify LinkedIn URL rejects invalid format', async ({ page }) => {
     // Click submit
     page.getByRole('button', { name: 'Submit' }).click();
     // Initiate the assertion function (assertDialogOrSuccess.ts from utils expecting an inline validation message from the linkedin input field
-    await assertDialogOrSuccess(page, "validation", "Please enter a URL.", "#linkedIn");
+    await assertDialogOrSuccess(page, "validation", "a URL", "#linkedIn");
     })

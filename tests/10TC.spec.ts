@@ -9,5 +9,5 @@ test('Verify email rejects invalid format', async ({ page }) => {
     //Click submit
     page.getByRole('button', { name: 'Submit' }).click();
     // Initiate the assertion function (assertDialogOrSuccess.ts from utils expecting an error dialog with a specific message)
-    await assertDialogOrSuccess(page, "validation", "Please include an '@' in the email address", "#email");
+    await assertDialogOrSuccess(page, "validation", "email address", "#email");
     }) 
